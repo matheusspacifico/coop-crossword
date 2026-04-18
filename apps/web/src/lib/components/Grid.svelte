@@ -1,11 +1,20 @@
 <script lang="ts">
   import type { PuzzleForClient } from '@crossword/shared';
+  import type { PuzzleUI } from '$lib/state/puzzle-ui.svelte';
 
   interface Props {
     puzzle: PuzzleForClient;
+    ui: PuzzleUI;
   }
 
-  let { puzzle }: Props = $props();
+  let { puzzle, ui }: Props = $props();
+
+  function cellClass(r: number, c: number): string {
+    const selection = ui.selection;
+    if (selection.row === r && selection.col === c) return 'bg-yellow-300';
+    if (ui.activeWordKeys[`${r},${c}`]) return 'bg-yellow-100';
+    return 'bg-white';
+  }
 </script>
 
 <div class="flex flex-wrap items-start gap-8">
@@ -18,13 +27,22 @@
         {#if cell.kind === 'block'}
           <div class="aspect-square bg-neutral-900"></div>
         {:else}
-          <div class="relative aspect-square bg-white">
+          <button
+            type="button"
+            class="relative aspect-square cursor-pointer {cellClass(r, c)}"
+            onclick={() => ui.selectCell(r, c)}
+          >
             {#if cell.number !== null}
               <span class="absolute top-0.5 left-1 text-[10px] leading-none text-neutral-600">
                 {cell.number}
               </span>
             {/if}
-          </div>
+            <span
+              class="absolute inset-0 flex items-center justify-center text-lg font-semibold text-neutral-900"
+            >
+              {ui.fills[r][c]}
+            </span>
+          </button>
         {/if}
       {/each}
     {/each}
