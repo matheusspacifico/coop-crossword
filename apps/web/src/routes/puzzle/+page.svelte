@@ -1,13 +1,9 @@
 <script lang="ts">
-  import type { PuzzleForClient } from '@crossword/shared';
   import Grid from '$lib/components/Grid.svelte';
-  import puzzleData from '$lib/puzzles/sample-01.json';
+  import type { PageData } from './$types';
 
-  // TEMPORARY: static import of a hand-stripped client copy. When the
-  // server exposes a puzzle endpoint, this import goes away and the page
-  // will fetch `PuzzleForClient` from the server. The source of truth for
-  // the full puzzle (with answers) lives in apps/server/puzzles/.
-  const puzzle = puzzleData as PuzzleForClient;
+  let { data }: { data: PageData } = $props();
+  const puzzle = $derived(data.puzzle);
 </script>
 
 <main class="mx-auto flex max-w-5xl flex-col gap-4 p-8">
