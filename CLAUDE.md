@@ -24,6 +24,8 @@ Managed with pnpm workspaces. Three workspaces:
 
 **Single WebSocket channel per room.** Game state updates, presence, and chat all flow through the same connection, discriminated by message `type`.
 
+**Puzzle format.** Defined in packages/shared/src/puzzle.ts as two types: PuzzleWithAnswers (server) and PuzzleForClient (stripped). Answers are stored uppercase ASCII with accents removed (MAÇÃ → MACA); clue text keeps accents. Language is pt-BR — puzzles and interface are Portuguese, code stays English.
+
 ## WebSocket Protocol
 
 Defined in `packages/shared/src/protocol.ts`. Two discriminated unions: `ClientMessage` (client to server) and `ServerMessage` (server to client). When adding a new message type, update this file first; the TypeScript compiler will then guide the required changes in both apps.
@@ -42,6 +44,7 @@ Defined in `packages/shared/src/protocol.ts`. Two discriminated unions: `ClientM
 - Do not introduce a database, authentication system, or external realtime service (Supabase, Pusher, etc.) without discussing. The design intentionally avoids these.
 - Do not send puzzle solutions to the client under any circumstance.
 - Keep the dependency surface small. Prefer the platform (native `WebSocket`, `crypto.randomUUID`, `Map`) over libraries when reasonable.
+- Until the server exposes a puzzle endpoint, the client imports a hand-stripped copy at apps/web/src/lib/puzzles/sample-01.json. This file is temporary and deletes itself when the fetch path lands.
 
 ## Out of Scope
 
