@@ -11,7 +11,7 @@ app.register(async (fastify) => {
   fastify.get('/ws', { websocket: true }, (socket, req) => {
     app.log.info('Client connected');
 
-    socket.on('message', (raw) => {
+    socket.on('message', (raw: Buffer) => {
       try {
         const msg = JSON.parse(raw.toString()) as ClientMessage;
         app.log.info({ msg }, 'received');
