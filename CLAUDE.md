@@ -22,6 +22,8 @@ Managed with pnpm workspaces. Three workspaces:
 
 **Puzzles as static JSON.** Puzzles live as JSON files in the server workspace. Initially hand-authored; later potentially generated with a combination of an LLM (for word/clue lists) and a layout algorithm.
 
+**Puzzle delivery over HTTP.** The server eager-loads all puzzle JSONs at startup into an in-memory `Map<string, PuzzleWithAnswers>` and exposes `GET /puzzles/:id`. Each response runs through `stripAnswers` from `@crossword/shared`, so no `answer` field ever crosses the process boundary. In dev, `apps/web/vite.config.ts` proxies `/api/*` → `http://localhost:3001/*`, keeping the client same-origin without a CORS dependency. The client fetches in a SvelteKit `load` function using the injected `fetch`.
+
 **Single WebSocket channel per room.** Game state updates, presence, and chat all flow through the same connection, discriminated by message `type`.
 
 **Puzzle format.** Defined in packages/shared/src/puzzle.ts as two types: PuzzleWithAnswers (server) and PuzzleForClient (stripped). Answers are stored uppercase ASCII with accents removed (MAÇÃ → MACA); clue text keeps accents. Language is pt-BR — puzzles and interface are Portuguese, code stays English.
@@ -44,7 +46,6 @@ Defined in `packages/shared/src/protocol.ts`. Two discriminated unions: `ClientM
 - Do not introduce a database, authentication system, or external realtime service (Supabase, Pusher, etc.) without discussing. The design intentionally avoids these.
 - Do not send puzzle solutions to the client under any circumstance.
 - Keep the dependency surface small. Prefer the platform (native `WebSocket`, `crypto.randomUUID`, `Map`) over libraries when reasonable.
-- Until the server exposes a puzzle endpoint, the client imports a hand-stripped copy at apps/web/src/lib/puzzles/sample-01.json. This file is temporary and deletes itself when the fetch path lands.
 
 ## Out of Scope
 
