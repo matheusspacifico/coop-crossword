@@ -77,3 +77,14 @@ export type PuzzleForClient = PuzzleBase & {
     down: PuzzleClue[];
   };
 };
+
+export function stripAnswers(puzzle: PuzzleWithAnswers): PuzzleForClient {
+  const strip = ({ answer: _answer, ...rest }: PuzzleClueWithAnswer): PuzzleClue => rest;
+  return {
+    ...puzzle,
+    clues: {
+      across: puzzle.clues.across.map(strip),
+      down: puzzle.clues.down.map(strip),
+    },
+  };
+}
