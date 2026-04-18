@@ -16,7 +16,7 @@ app.get<{ Params: { id: string } }>('/puzzles/:id', async (req, reply) => {
 });
 
 app.register(async (fastify) => {
-  fastify.get('/ws', { websocket: true }, (socket, req) => {
+  fastify.get('/ws', { websocket: true }, (socket, _req) => {
     app.log.info('Client connected');
 
     socket.on('message', (raw: Buffer) => {
