@@ -2,6 +2,7 @@
   "name": "coop-crossword",
   "private": true,
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
     "dev": "pnpm -r --parallel dev",
     "build": "pnpm -r build",
