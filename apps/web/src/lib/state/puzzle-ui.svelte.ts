@@ -4,6 +4,13 @@ export type Direction = 'across' | 'down';
 export type Selection = { row: number; col: number; direction: Direction };
 export type CellCoord = { row: number; col: number };
 
+export type PuzzleUIOptions = {
+  puzzle: PuzzleForClient;
+  getFills: () => string[][];
+  getSolvedWords: () => string[];
+  onFill: (row: number, col: number, letter: string) => void;
+};
+
 function isPlayable(puzzle: PuzzleForClient, row: number, col: number): boolean {
   if (row < 0 || row >= puzzle.rows || col < 0 || col >= puzzle.cols) return false;
   return puzzle.grid[row][col].kind === 'cell';
@@ -62,13 +69,38 @@ function deriveWordCells(puzzle: PuzzleForClient, selection: Selection): CellCoo
   return cells;
 }
 
-export function createPuzzleUI(puzzle: PuzzleForClient) {
+function deriveSolvedCellKeys(
+  puzzle: PuzzleForClient,
+  solvedWords: string[],
+): Record<string, true> {
+  const out: Record<string, true> = {};
+  for (const key of solvedWords) {
+    const dirChar = key.slice(-1);
+    const numStr = key.slice(0, -1);
+    const number = Number(numStr);
+    if (!Number.isFinite(number)) continue;
+    const dir: Direction = dirChar === 'A' ? 'across' : 'down';
+    const clue = puzzle.clues[dir].find((c) => c.number === number);
+    if (!clue) continue;
+    for (let i = 0; i < clue.length; i++) {
+      const r = dir === 'across' ? clue.row : clue.row + i;
+      const c = dir === 'across' ? clue.col + i : clue.col;
+      out[`${r},${c}`] = true;
+    }
+  }
+  return out;
+}
+
+export function createPuzzleUI(options: PuzzleUIOptions) {
+  const { puzzle, getFills, getSolvedWords, onFill } = options;
+
   const state = $state({
     selection: findFirstPlayableCell(puzzle),
-    fills: Array.from({ length: puzzle.rows }, () =>
-      Array.from({ length: puzzle.cols }, () => ''),
-    ) as string[][],
   });
+
+  const fills = $derived(getFills());
+  const solvedWords = $derived(getSolvedWords());
+  const solvedCellKeys = $derived(deriveSolvedCellKeys(puzzle, solvedWords));
 
   const activeWord = $derived(deriveWordCells(puzzle, state.selection));
   const activeWordKeys = $derived(
@@ -104,7 +136,7 @@ export function createPuzzleUI(puzzle: PuzzleForClient) {
   function typeLetter(letter: string) {
     const { row, col, direction } = state.selection;
     if (!isPlayable(puzzle, row, col)) return;
-    state.fills[row][col] = letter.toUpperCase();
+    onFill(row, col, letter.toUpperCase());
     const next = stepPlayable(puzzle, row, col, direction, 1);
     if (next) {
       state.selection = { row: next.row, col: next.col, direction };
@@ -114,8 +146,9 @@ export function createPuzzleUI(puzzle: PuzzleForClient) {
   function backspace() {
     const { row, col, direction } = state.selection;
     if (!isPlayable(puzzle, row, col)) return;
-    if (state.fills[row][col] !== '') {
-      state.fills[row][col] = '';
+    const current = fills[row]?.[col] ?? '';
+    if (current !== '') {
+      onFill(row, col, '');
       return;
     }
     const prev = stepPlayable(puzzle, row, col, direction, -1);
@@ -161,13 +194,16 @@ export function createPuzzleUI(puzzle: PuzzleForClient) {
       return state.selection;
     },
     get fills() {
-      return state.fills;
+      return fills;
     },
     get activeWord() {
       return activeWord;
     },
     get activeWordKeys() {
       return activeWordKeys;
+    },
+    get solvedCellKeys() {
+      return solvedCellKeys;
     },
     selectCell,
     handleKeydown,

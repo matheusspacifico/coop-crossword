@@ -9,11 +9,21 @@
 
   let { data }: { data: PageData } = $props();
   const puzzle = $derived(data.puzzle);
-  const ui = $derived(createPuzzleUI(puzzle));
 
   let playerName = $state('');
   let copyStatus = $state<'idle' | 'copied' | 'failed'>('idle');
   let room = $state<RoomState | null>(null);
+
+  const ui = $derived(
+    room
+      ? createPuzzleUI({
+          puzzle,
+          getFills: () => room!.fills,
+          getSolvedWords: () => room!.solvedWords,
+          onFill: (r, c, letter) => room!.sendFill(r, c, letter),
+        })
+      : null,
+  );
 
   $effect(() => {
     const n = getPlayerName();
@@ -40,7 +50,9 @@
   });
 
   $effect(() => {
-    const handler = (e: KeyboardEvent) => ui.handleKeydown(e);
+    if (!ui) return;
+    const currentUi = ui;
+    const handler = (e: KeyboardEvent) => currentUi.handleKeydown(e);
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   });
@@ -126,5 +138,7 @@
       <p class="text-sm text-neutral-500">Tema: {puzzle.theme}</p>
     </div>
   </header>
-  <Grid {puzzle} {ui} />
+  {#if ui}
+    <Grid {puzzle} {ui} />
+  {/if}
 </main>

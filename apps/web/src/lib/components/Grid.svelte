@@ -13,6 +13,7 @@
     const selection = ui.selection;
     if (selection.row === r && selection.col === c) return 'bg-yellow-300';
     if (ui.activeWordKeys[`${r},${c}`]) return 'bg-yellow-100';
+    if (ui.solvedCellKeys[`${r},${c}`]) return 'bg-emerald-50';
     return 'bg-white';
   }
 </script>
@@ -40,7 +41,7 @@
             <span
               class="absolute inset-0 flex items-center justify-center text-lg font-semibold text-neutral-900"
             >
-              {ui.fills[r][c]}
+              {ui.fills[r]?.[c] ?? ''}
             </span>
           </button>
         {/if}
