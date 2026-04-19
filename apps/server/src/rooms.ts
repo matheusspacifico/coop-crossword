@@ -16,6 +16,9 @@ export type Room = {
   id: RoomId;
   puzzleId: string;
   players: Map<PlayerId, RoomPlayer>;
+  fills: string[][];
+  filledBy: (PlayerId | null)[][];
+  solvedWords: Set<string>;
 };
 
 export type JoinResult =
@@ -27,16 +30,30 @@ const rooms = new Map<RoomId, Room>();
 function getOrCreateRoom(roomId: RoomId): Room {
   const existing = rooms.get(roomId);
   if (existing) return existing;
-  if (!getPuzzle(DEFAULT_PUZZLE_ID)) {
+  const puzzle = getPuzzle(DEFAULT_PUZZLE_ID);
+  if (!puzzle) {
     throw new Error(`Puzzle ${DEFAULT_PUZZLE_ID} not loaded`);
   }
+  const fills: string[][] = Array.from({ length: puzzle.rows }, () =>
+    Array.from({ length: puzzle.cols }, () => ''),
+  );
+  const filledBy: (PlayerId | null)[][] = Array.from({ length: puzzle.rows }, () =>
+    Array.from({ length: puzzle.cols }, () => null),
+  );
   const room: Room = {
     id: roomId,
     puzzleId: DEFAULT_PUZZLE_ID,
     players: new Map(),
+    fills,
+    filledBy,
+    solvedWords: new Set(),
   };
   rooms.set(roomId, room);
   return room;
+}
+
+export function getRoom(roomId: RoomId): Room | null {
+  return rooms.get(roomId) ?? null;
 }
 
 function toPublicPlayer(p: RoomPlayer): Player {
@@ -80,11 +97,19 @@ export function leaveRoom(roomId: RoomId, playerId: PlayerId): Room | null {
 export function buildStateMessage(room: Room): ServerMessage {
   const puzzle = getPuzzle(room.puzzleId);
   if (!puzzle) throw new Error(`Puzzle ${room.puzzleId} not loaded`);
-  const cells: Cell[][] = Array.from({ length: puzzle.rows }, () =>
-    Array.from({ length: puzzle.cols }, () => ({ letter: null, filledBy: null })),
+  const cells: Cell[][] = Array.from({ length: puzzle.rows }, (_row, r) =>
+    Array.from({ length: puzzle.cols }, (_col, c) => ({
+      letter: room.fills[r][c] || null,
+      filledBy: room.filledBy[r][c],
+    })),
   );
   const players: Player[] = Array.from(room.players.values(), toPublicPlayer);
-  return { type: 'state', players, cells };
+  return {
+    type: 'state',
+    players,
+    cells,
+    solvedWords: Array.from(room.solvedWords),
+  };
 }
 
 export function broadcast(
