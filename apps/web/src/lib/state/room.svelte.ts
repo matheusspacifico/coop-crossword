@@ -1,4 +1,4 @@
-import type { ClientMessage, Player, RoomId, ServerMessage } from '@crossword/shared';
+import type { ClientMessage, Player, PlayerId, RoomId, ServerMessage } from '@crossword/shared';
 import { getPlayerId, getPlayerName } from './player';
 
 export type RoomStatus = 'connecting' | 'connected' | 'reconnecting' | 'disconnected' | 'error';
@@ -10,10 +10,16 @@ export function createRoom(roomId: RoomId) {
     players: Player[];
     status: RoomStatus;
     error: string | null;
+    fills: string[][];
+    filledBy: (PlayerId | null)[][];
+    solvedWords: string[];
   }>({
     players: [],
     status: 'connecting',
     error: null,
+    fills: [],
+    filledBy: [],
+    solvedWords: [],
   });
 
   let socket: WebSocket | null = null;
@@ -47,6 +53,9 @@ export function createRoom(roomId: RoomId) {
     switch (msg.type) {
       case 'state':
         state.players = msg.players;
+        state.fills = msg.cells.map((row) => row.map((c) => c.letter ?? ''));
+        state.filledBy = msg.cells.map((row) => row.map((c) => c.filledBy));
+        state.solvedWords = msg.solvedWords;
         return;
       case 'playerJoined':
         if (!state.players.some((p) => p.id === msg.player.id)) {
@@ -56,14 +65,31 @@ export function createRoom(roomId: RoomId) {
       case 'playerLeft':
         state.players = state.players.filter((p) => p.id !== msg.playerId);
         return;
+      case 'cellUpdate': {
+        if (!state.fills[msg.row]) return;
+        state.fills[msg.row][msg.col] = msg.letter;
+        state.filledBy[msg.row][msg.col] = msg.letter === '' ? null : msg.by;
+        return;
+      }
+      case 'wordSolved':
+        if (!state.solvedWords.includes(msg.word)) {
+          state.solvedWords = [...state.solvedWords, msg.word];
+        }
+        return;
       case 'error':
         state.error = msg.message;
         state.status = 'error';
         return;
       default:
-        // cellUpdate / cursor / wordSolved / chat — wired in 5b.
+        // cursor / chat — 5c.
         return;
     }
+  }
+
+  function sendFill(row: number, col: number, letter: string): void {
+    if (!socket || socket.readyState !== WebSocket.OPEN) return;
+    const msg: ClientMessage = { type: 'fill', row, col, letter };
+    socket.send(JSON.stringify(msg));
   }
 
   function connect() {
@@ -125,6 +151,16 @@ export function createRoom(roomId: RoomId) {
     get error() {
       return state.error;
     },
+    get fills() {
+      return state.fills;
+    },
+    get filledBy() {
+      return state.filledBy;
+    },
+    get solvedWords() {
+      return state.solvedWords;
+    },
+    sendFill,
     destroy() {
       destroyed = true;
       clearReconnectTimer();
