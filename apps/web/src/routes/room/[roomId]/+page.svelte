@@ -2,7 +2,7 @@
   import Grid from '$lib/components/Grid.svelte';
   import { createPuzzleUI } from '$lib/state/puzzle-ui.svelte';
   import { createRoom, type RoomState } from '$lib/state/room.svelte';
-  import { getPlayerName } from '$lib/state/player';
+  import { getPlayerId, getPlayerName } from '$lib/state/player';
   import { goto } from '$app/navigation';
   import { resolve } from '$app/paths';
   import type { PageData } from './$types';
@@ -21,6 +21,19 @@
           getFills: () => room!.fills,
           getSolvedWords: () => room!.solvedWords,
           onFill: (r, c, letter) => room!.sendFill(r, c, letter),
+          onSelect: (r, c) => room!.sendSelect(r, c),
+          getRemoteCursors: () => {
+            const me = getPlayerId();
+            const r = room!;
+            const out: Array<{ row: number; col: number; color: string }> = [];
+            for (const p of r.players) {
+              if (p.id === me) continue;
+              const cur = r.cursors[p.id];
+              if (!cur) continue;
+              out.push({ row: cur.row, col: cur.col, color: p.color });
+            }
+            return out;
+          },
         })
       : null,
   );

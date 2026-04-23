@@ -13,6 +13,7 @@ export function createRoom(roomId: RoomId) {
     fills: string[][];
     filledBy: (PlayerId | null)[][];
     solvedWords: string[];
+    cursors: Record<PlayerId, { row: number; col: number }>;
   }>({
     players: [],
     status: 'connecting',
@@ -20,6 +21,7 @@ export function createRoom(roomId: RoomId) {
     fills: [],
     filledBy: [],
     solvedWords: [],
+    cursors: {},
   });
 
   let socket: WebSocket | null = null;
@@ -51,26 +53,42 @@ export function createRoom(roomId: RoomId) {
 
   function handleMessage(msg: ServerMessage) {
     switch (msg.type) {
-      case 'state':
+      case 'state': {
         state.players = msg.players;
         state.fills = msg.cells.map((row) => row.map((c) => c.letter ?? ''));
         state.filledBy = msg.cells.map((row) => row.map((c) => c.filledBy));
         state.solvedWords = msg.solvedWords;
+        const next: Record<PlayerId, { row: number; col: number }> = {};
+        for (const c of msg.cursors) next[c.playerId] = { row: c.row, col: c.col };
+        state.cursors = next;
         return;
+      }
       case 'playerJoined':
         if (!state.players.some((p) => p.id === msg.player.id)) {
           state.players = [...state.players, msg.player];
         }
         return;
-      case 'playerLeft':
+      case 'playerLeft': {
         state.players = state.players.filter((p) => p.id !== msg.playerId);
+        if (msg.playerId in state.cursors) {
+          const next = { ...state.cursors };
+          delete next[msg.playerId];
+          state.cursors = next;
+        }
         return;
+      }
       case 'cellUpdate': {
         if (!state.fills[msg.row]) return;
         state.fills[msg.row][msg.col] = msg.letter;
         state.filledBy[msg.row][msg.col] = msg.letter === '' ? null : msg.by;
         return;
       }
+      case 'cursor':
+        state.cursors = {
+          ...state.cursors,
+          [msg.playerId]: { row: msg.row, col: msg.col },
+        };
+        return;
       case 'wordSolved':
         if (!state.solvedWords.includes(msg.word)) {
           state.solvedWords = [...state.solvedWords, msg.word];
@@ -81,14 +99,24 @@ export function createRoom(roomId: RoomId) {
         state.status = 'error';
         return;
       default:
-        // cursor / chat — 5c.
+        // chat — 5d.
         return;
     }
   }
 
   function sendFill(row: number, col: number, letter: string): void {
+    if (!state.fills[row]) return;
+    const upper = letter.toUpperCase();
+    state.fills[row][col] = upper;
+    state.filledBy[row][col] = upper === '' ? null : getPlayerId();
     if (!socket || socket.readyState !== WebSocket.OPEN) return;
     const msg: ClientMessage = { type: 'fill', row, col, letter };
+    socket.send(JSON.stringify(msg));
+  }
+
+  function sendSelect(row: number, col: number): void {
+    if (!socket || socket.readyState !== WebSocket.OPEN) return;
+    const msg: ClientMessage = { type: 'select', row, col };
     socket.send(JSON.stringify(msg));
   }
 
@@ -160,7 +188,11 @@ export function createRoom(roomId: RoomId) {
     get solvedWords() {
       return state.solvedWords;
     },
+    get cursors() {
+      return state.cursors;
+    },
     sendFill,
+    sendSelect,
     destroy() {
       destroyed = true;
       clearReconnectTimer();

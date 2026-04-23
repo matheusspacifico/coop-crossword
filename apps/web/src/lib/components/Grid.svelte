@@ -16,6 +16,13 @@
     if (ui.solvedCellKeys[`${r},${c}`]) return 'bg-emerald-50';
     return 'bg-white';
   }
+
+  function remoteCursorColor(r: number, c: number): string | null {
+    for (const cur of ui.remoteCursors) {
+      if (cur.row === r && cur.col === c) return cur.color;
+    }
+    return null;
+  }
 </script>
 
 <div class="flex flex-wrap items-start gap-8">
@@ -28,9 +35,11 @@
         {#if cell.kind === 'block'}
           <div class="aspect-square bg-neutral-900"></div>
         {:else}
+          {@const remote = remoteCursorColor(r, c)}
           <button
             type="button"
             class="relative aspect-square cursor-pointer {cellClass(r, c)}"
+            style={remote ? `outline: 2px solid ${remote}; outline-offset: -2px;` : ''}
             onclick={() => ui.selectCell(r, c)}
           >
             {#if cell.number !== null}

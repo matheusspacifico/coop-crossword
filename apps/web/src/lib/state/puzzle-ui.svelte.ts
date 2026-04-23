@@ -9,6 +9,8 @@ export type PuzzleUIOptions = {
   getFills: () => string[][];
   getSolvedWords: () => string[];
   onFill: (row: number, col: number, letter: string) => void;
+  onSelect: (row: number, col: number) => void;
+  getRemoteCursors: () => Array<{ row: number; col: number; color: string }>;
 };
 
 function isPlayable(puzzle: PuzzleForClient, row: number, col: number): boolean {
@@ -92,7 +94,7 @@ function deriveSolvedCellKeys(
 }
 
 export function createPuzzleUI(options: PuzzleUIOptions) {
-  const { puzzle, getFills, getSolvedWords, onFill } = options;
+  const { puzzle, getFills, getSolvedWords, onFill, onSelect, getRemoteCursors } = options;
 
   const state = $state({
     selection: findFirstPlayableCell(puzzle),
@@ -101,6 +103,7 @@ export function createPuzzleUI(options: PuzzleUIOptions) {
   const fills = $derived(getFills());
   const solvedWords = $derived(getSolvedWords());
   const solvedCellKeys = $derived(deriveSolvedCellKeys(puzzle, solvedWords));
+  const remoteCursors = $derived(getRemoteCursors());
 
   const activeWord = $derived(deriveWordCells(puzzle, state.selection));
   const activeWordKeys = $derived(
@@ -119,6 +122,7 @@ export function createPuzzleUI(options: PuzzleUIOptions) {
       return;
     }
     state.selection = { row, col, direction: current.direction };
+    onSelect(row, col);
   }
 
   function moveArrow(key: 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown') {
@@ -128,6 +132,7 @@ export function createPuzzleUI(options: PuzzleUIOptions) {
     const next = stepPlayable(puzzle, row, col, direction, step);
     if (next) {
       state.selection = { row: next.row, col: next.col, direction };
+      onSelect(next.row, next.col);
     } else {
       state.selection = { row, col, direction };
     }
@@ -140,6 +145,7 @@ export function createPuzzleUI(options: PuzzleUIOptions) {
     const next = stepPlayable(puzzle, row, col, direction, 1);
     if (next) {
       state.selection = { row: next.row, col: next.col, direction };
+      onSelect(next.row, next.col);
     }
   }
 
@@ -204,6 +210,9 @@ export function createPuzzleUI(options: PuzzleUIOptions) {
     },
     get solvedCellKeys() {
       return solvedCellKeys;
+    },
+    get remoteCursors() {
+      return remoteCursors;
     },
     selectCell,
     handleKeydown,
