@@ -18,7 +18,7 @@ Managed with pnpm workspaces. Three workspaces:
 
 **Answers stay on the server.** Puzzle JSON files contain the solution, but the solution is never sent to the client. The client only receives the grid shape (which cells are black vs. playable) and clue text. Word completion is validated server-side; the server broadcasts which words have been solved.
 
-**State in memory.** Room state lives in a `Map<RoomId, Room>` in the Node process. There is no database. If the server restarts, in-progress games are lost. This is acceptable for the scope.
+**State in memory.** Room state lives in a `Map<RoomId, Room>` in the Node process. There is no database. If the server restarts, in-progress games are lost. Chat is broadcast-only — the server never stores messages, so a reconnecting client starts with an empty log. This is acceptable for the scope.
 
 **Puzzles as static JSON.** Puzzles live as JSON files in the server workspace. Initially hand-authored; later potentially generated with a combination of an LLM (for word/clue lists) and a layout algorithm.
 

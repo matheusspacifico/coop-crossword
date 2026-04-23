@@ -5,7 +5,7 @@ A cooperative real-time crossword puzzle game for two players. Both players shar
 ## Stack
 
 - **Frontend**: SvelteKit + TypeScript + TailwindCSS
-- **Backend**: Node.js + Fastify + ws (WebSocket)
+- **Backend**: Node.js + Fastify + `@fastify/websocket`
 - **Shared**: TypeScript types for the WebSocket protocol, shared between frontend and backend
 - **Package manager**: pnpm (workspaces)
 
@@ -51,6 +51,7 @@ Run from the root:
 - `pnpm dev` — Start all apps in development mode
 - `pnpm build` — Build all apps for production
 - `pnpm typecheck` — Type-check all workspaces
+- `pnpm lint` — Lint and check formatting in all workspaces
 
 Each app also has its own scripts. See the individual `package.json` files inside `apps/web` and `apps/server`.
 
