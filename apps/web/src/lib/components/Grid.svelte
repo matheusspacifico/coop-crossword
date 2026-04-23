@@ -36,6 +36,7 @@
           <div class="aspect-square bg-neutral-900"></div>
         {:else}
           {@const remote = remoteCursorColor(r, c)}
+          {@const glyphColor = ui.letterColor(r, c)}
           <button
             type="button"
             class="relative aspect-square cursor-pointer {cellClass(r, c)}"
@@ -49,6 +50,7 @@
             {/if}
             <span
               class="absolute inset-0 flex items-center justify-center text-lg font-semibold text-neutral-900"
+              style={glyphColor ? `color: ${glyphColor};` : ''}
             >
               {ui.fills[r]?.[c] ?? ''}
             </span>

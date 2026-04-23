@@ -37,5 +37,6 @@ export type ServerMessage =
     }
   | { type: 'cursor'; playerId: PlayerId; row: number; col: number }
   | { type: 'wordSolved'; word: string; by: PlayerId }
+  | { type: 'wordUnsolved'; word: string }
   | { type: 'chat'; from: PlayerId; text: string; timestamp: number }
   | { type: 'error'; message: string };

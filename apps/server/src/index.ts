@@ -80,6 +80,26 @@ function checkWordsSolved(
   visit(puzzle.clues.down, 'D');
 }
 
+function checkWordsUnsolved(
+  room: Room,
+  puzzle: PuzzleWithAnswers,
+  row: number,
+  col: number,
+): void {
+  const visit = (clues: PuzzleClueWithAnswer[], dir: 'A' | 'D') => {
+    for (const clue of clues) {
+      if (!clueContains(clue, dir, row, col)) continue;
+      const key = `${clue.number}${dir}`;
+      if (!room.solvedWords.has(key)) continue;
+      if (wordIsSolved(room, clue, dir)) continue;
+      room.solvedWords.delete(key);
+      broadcast(room, { type: 'wordUnsolved', word: key });
+    }
+  };
+  visit(puzzle.clues.across, 'A');
+  visit(puzzle.clues.down, 'D');
+}
+
 app.register(async (fastify) => {
   fastify.get<{ Params: { roomId: string } }>(
     '/ws/:roomId',
@@ -161,6 +181,7 @@ app.register(async (fastify) => {
             letter: upper,
             by: joinedPlayerId,
           });
+          checkWordsUnsolved(room, puzzle, row, col);
           if (upper !== '') checkWordsSolved(room, puzzle, row, col, joinedPlayerId);
           return;
         }
@@ -189,7 +210,23 @@ app.register(async (fastify) => {
           );
           return;
         }
-        // chat deferred to 5d.
+
+        if (msg.type === 'chat') {
+          const room = getRoom(roomId);
+          if (!room) return;
+          const text = msg.text.trim();
+          if (text.length === 0 || text.length > 500) {
+            app.log.debug({ len: msg.text.length }, 'chat rejected');
+            return;
+          }
+          broadcast(room, {
+            type: 'chat',
+            from: joinedPlayerId,
+            text,
+            timestamp: Date.now(),
+          });
+          return;
+        }
       });
 
       socket.on('close', () => {

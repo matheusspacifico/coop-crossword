@@ -14,6 +14,7 @@ export function createRoom(roomId: RoomId) {
     filledBy: (PlayerId | null)[][];
     solvedWords: string[];
     cursors: Record<PlayerId, { row: number; col: number }>;
+    messages: Array<{ id: string; from: PlayerId; text: string; timestamp: number }>;
   }>({
     players: [],
     status: 'connecting',
@@ -22,12 +23,14 @@ export function createRoom(roomId: RoomId) {
     filledBy: [],
     solvedWords: [],
     cursors: {},
+    messages: [],
   });
 
   let socket: WebSocket | null = null;
   let attempts = 0;
   let destroyed = false;
   let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+  let chatCounter = 0;
 
   function clearReconnectTimer() {
     if (reconnectTimer !== null) {
@@ -61,6 +64,7 @@ export function createRoom(roomId: RoomId) {
         const next: Record<PlayerId, { row: number; col: number }> = {};
         for (const c of msg.cursors) next[c.playerId] = { row: c.row, col: c.col };
         state.cursors = next;
+        state.messages = [];
         return;
       }
       case 'playerJoined':
@@ -94,12 +98,20 @@ export function createRoom(roomId: RoomId) {
           state.solvedWords = [...state.solvedWords, msg.word];
         }
         return;
+      case 'wordUnsolved':
+        state.solvedWords = state.solvedWords.filter((w) => w !== msg.word);
+        return;
+      case 'chat': {
+        const id = `${msg.timestamp}:${msg.from}:${chatCounter++}`;
+        state.messages = [
+          ...state.messages,
+          { id, from: msg.from, text: msg.text, timestamp: msg.timestamp },
+        ];
+        return;
+      }
       case 'error':
         state.error = msg.message;
         state.status = 'error';
-        return;
-      default:
-        // chat — 5d.
         return;
     }
   }
@@ -117,6 +129,12 @@ export function createRoom(roomId: RoomId) {
   function sendSelect(row: number, col: number): void {
     if (!socket || socket.readyState !== WebSocket.OPEN) return;
     const msg: ClientMessage = { type: 'select', row, col };
+    socket.send(JSON.stringify(msg));
+  }
+
+  function sendChat(text: string): void {
+    if (!socket || socket.readyState !== WebSocket.OPEN) return;
+    const msg: ClientMessage = { type: 'chat', text };
     socket.send(JSON.stringify(msg));
   }
 
@@ -191,8 +209,12 @@ export function createRoom(roomId: RoomId) {
     get cursors() {
       return state.cursors;
     },
+    get messages() {
+      return state.messages;
+    },
     sendFill,
     sendSelect,
+    sendChat,
     destroy() {
       destroyed = true;
       clearReconnectTimer();

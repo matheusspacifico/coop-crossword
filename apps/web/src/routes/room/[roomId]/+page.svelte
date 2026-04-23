@@ -1,5 +1,6 @@
 <script lang="ts">
   import Grid from '$lib/components/Grid.svelte';
+  import Chat from '$lib/components/Chat.svelte';
   import { createPuzzleUI } from '$lib/state/puzzle-ui.svelte';
   import { createRoom, type RoomState } from '$lib/state/room.svelte';
   import { getPlayerId, getPlayerName } from '$lib/state/player';
@@ -19,7 +20,9 @@
       ? createPuzzleUI({
           puzzle,
           getFills: () => room!.fills,
+          getFilledBy: () => room!.filledBy,
           getSolvedWords: () => room!.solvedWords,
+          getPlayerColor: (id) => room!.players.find((p) => p.id === id)?.color ?? null,
           onFill: (r, c, letter) => room!.sendFill(r, c, letter),
           onSelect: (r, c) => room!.sendSelect(r, c),
           getRemoteCursors: () => {
@@ -151,7 +154,12 @@
       <p class="text-sm text-neutral-500">Tema: {puzzle.theme}</p>
     </div>
   </header>
-  {#if ui}
-    <Grid {puzzle} {ui} />
+  {#if ui && room}
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-start">
+      <div class="min-w-0 flex-1">
+        <Grid {puzzle} {ui} />
+      </div>
+      <Chat {room} class="lg:w-80" />
+    </div>
   {/if}
 </main>

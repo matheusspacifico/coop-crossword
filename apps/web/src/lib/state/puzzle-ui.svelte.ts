@@ -1,4 +1,4 @@
-import type { PuzzleForClient } from '@crossword/shared';
+import type { PlayerId, PuzzleForClient } from '@crossword/shared';
 
 export type Direction = 'across' | 'down';
 export type Selection = { row: number; col: number; direction: Direction };
@@ -7,7 +7,9 @@ export type CellCoord = { row: number; col: number };
 export type PuzzleUIOptions = {
   puzzle: PuzzleForClient;
   getFills: () => string[][];
+  getFilledBy: () => (PlayerId | null)[][];
   getSolvedWords: () => string[];
+  getPlayerColor: (playerId: PlayerId) => string | null;
   onFill: (row: number, col: number, letter: string) => void;
   onSelect: (row: number, col: number) => void;
   getRemoteCursors: () => Array<{ row: number; col: number; color: string }>;
@@ -94,13 +96,23 @@ function deriveSolvedCellKeys(
 }
 
 export function createPuzzleUI(options: PuzzleUIOptions) {
-  const { puzzle, getFills, getSolvedWords, onFill, onSelect, getRemoteCursors } = options;
+  const {
+    puzzle,
+    getFills,
+    getFilledBy,
+    getSolvedWords,
+    getPlayerColor,
+    onFill,
+    onSelect,
+    getRemoteCursors,
+  } = options;
 
   const state = $state({
     selection: findFirstPlayableCell(puzzle),
   });
 
   const fills = $derived(getFills());
+  const filledBy = $derived(getFilledBy());
   const solvedWords = $derived(getSolvedWords());
   const solvedCellKeys = $derived(deriveSolvedCellKeys(puzzle, solvedWords));
   const remoteCursors = $derived(getRemoteCursors());
@@ -160,7 +172,14 @@ export function createPuzzleUI(options: PuzzleUIOptions) {
     const prev = stepPlayable(puzzle, row, col, direction, -1);
     if (prev) {
       state.selection = { row: prev.row, col: prev.col, direction };
+      onSelect(prev.row, prev.col);
     }
+  }
+
+  function letterColor(row: number, col: number): string | null {
+    const owner = filledBy[row]?.[col];
+    if (!owner) return null;
+    return getPlayerColor(owner);
   }
 
   function handleKeydown(e: KeyboardEvent) {
@@ -214,6 +233,7 @@ export function createPuzzleUI(options: PuzzleUIOptions) {
     get remoteCursors() {
       return remoteCursors;
     },
+    letterColor,
     selectCell,
     handleKeydown,
   };
