@@ -10,7 +10,10 @@ export type RoomSocket = {
   close(code?: number, reason?: string): void;
 };
 
-type RoomPlayer = Player & { socket: RoomSocket };
+type RoomPlayer = Player & {
+  socket: RoomSocket;
+  cursor: { row: number; col: number } | null;
+};
 
 export type Room = {
   id: RoomId;
@@ -78,7 +81,7 @@ export function joinRoom(
     return { kind: 'full' };
   }
   const color = COLORS[room.players.size];
-  const player: RoomPlayer = { id: playerId, name, color, socket };
+  const player: RoomPlayer = { id: playerId, name, color, socket, cursor: null };
   room.players.set(playerId, player);
   return { kind: 'ok', room, player: toPublicPlayer(player) };
 }
@@ -104,11 +107,16 @@ export function buildStateMessage(room: Room): ServerMessage {
     })),
   );
   const players: Player[] = Array.from(room.players.values(), toPublicPlayer);
+  const cursors: Array<{ playerId: PlayerId; row: number; col: number }> = [];
+  for (const p of room.players.values()) {
+    if (p.cursor) cursors.push({ playerId: p.id, row: p.cursor.row, col: p.cursor.col });
+  }
   return {
     type: 'state',
     players,
     cells,
     solvedWords: Array.from(room.solvedWords),
+    cursors,
   };
 }
 

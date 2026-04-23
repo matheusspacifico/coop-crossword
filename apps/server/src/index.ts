@@ -164,7 +164,32 @@ app.register(async (fastify) => {
           if (upper !== '') checkWordsSolved(room, puzzle, row, col, joinedPlayerId);
           return;
         }
-        // Other message types (select, chat) deferred to 5c.
+
+        if (msg.type === 'select') {
+          const room = getRoom(roomId);
+          if (!room) return;
+          const puzzle = getPuzzle(room.puzzleId);
+          if (!puzzle) return;
+          const { row, col } = msg;
+          if (row < 0 || row >= puzzle.rows || col < 0 || col >= puzzle.cols) {
+            app.log.debug({ row, col }, 'select out of bounds');
+            return;
+          }
+          if (puzzle.grid[row][col].kind !== 'cell') {
+            app.log.debug({ row, col }, 'select on non-cell');
+            return;
+          }
+          const player = room.players.get(joinedPlayerId);
+          if (!player) return;
+          player.cursor = { row, col };
+          broadcast(
+            room,
+            { type: 'cursor', playerId: joinedPlayerId, row, col },
+            joinedPlayerId,
+          );
+          return;
+        }
+        // chat deferred to 5d.
       });
 
       socket.on('close', () => {

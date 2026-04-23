@@ -19,7 +19,13 @@ export type ClientMessage =
   | { type: 'chat'; text: string };
 
 export type ServerMessage =
-  | { type: 'state'; players: Player[]; cells: Cell[][]; solvedWords: string[] }
+  | {
+      type: 'state';
+      players: Player[];
+      cells: Cell[][];
+      solvedWords: string[];
+      cursors: Array<{ playerId: PlayerId; row: number; col: number }>;
+    }
   | { type: 'playerJoined'; player: Player }
   | { type: 'playerLeft'; playerId: PlayerId }
   | {
