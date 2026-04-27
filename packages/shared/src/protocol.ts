@@ -13,7 +13,7 @@ export type Cell = {
 };
 
 export type ClientMessage =
-  | { type: 'join'; roomId: RoomId; playerId: PlayerId; name: string }
+  | { type: 'join'; roomId: RoomId; playerId: PlayerId; name: string; puzzleId?: string }
   | { type: 'select'; row: number; col: number }
   | { type: 'fill'; row: number; col: number; letter: string }
   | { type: 'chat'; text: string };
@@ -21,6 +21,7 @@ export type ClientMessage =
 export type ServerMessage =
   | {
       type: 'state';
+      puzzleId: string;
       players: Player[];
       cells: Cell[][];
       solvedWords: string[];

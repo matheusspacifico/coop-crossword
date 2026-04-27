@@ -136,9 +136,14 @@ app.register(async (fastify) => {
             return;
           }
 
-          const result = joinRoom(roomId, msg.playerId, msg.name, socket);
+          const result = joinRoom(roomId, msg.playerId, msg.name, socket, msg.puzzleId);
           if (result.kind === 'full') {
             sendError(socket, 'Sala cheia');
+            socket.close();
+            return;
+          }
+          if (result.kind === 'invalidPuzzle') {
+            sendError(socket, 'Puzzle inválido');
             socket.close();
             return;
           }

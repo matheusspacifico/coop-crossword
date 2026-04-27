@@ -26,17 +26,17 @@ export type Room = {
 
 export type JoinResult =
   | { kind: 'ok'; room: Room; player: Player }
-  | { kind: 'full' };
+  | { kind: 'full' }
+  | { kind: 'invalidPuzzle' };
 
 const rooms = new Map<RoomId, Room>();
 
-function getOrCreateRoom(roomId: RoomId): Room {
+function getOrCreateRoom(roomId: RoomId, requestedPuzzleId?: string): Room | null {
   const existing = rooms.get(roomId);
   if (existing) return existing;
-  const puzzle = getPuzzle(DEFAULT_PUZZLE_ID);
-  if (!puzzle) {
-    throw new Error(`Puzzle ${DEFAULT_PUZZLE_ID} not loaded`);
-  }
+  const puzzleId = requestedPuzzleId ?? DEFAULT_PUZZLE_ID;
+  const puzzle = getPuzzle(puzzleId);
+  if (!puzzle) return null;
   const fills: string[][] = Array.from({ length: puzzle.rows }, () =>
     Array.from({ length: puzzle.cols }, () => ''),
   );
@@ -45,7 +45,7 @@ function getOrCreateRoom(roomId: RoomId): Room {
   );
   const room: Room = {
     id: roomId,
-    puzzleId: DEFAULT_PUZZLE_ID,
+    puzzleId,
     players: new Map(),
     fills,
     filledBy,
@@ -68,8 +68,10 @@ export function joinRoom(
   playerId: PlayerId,
   name: string,
   socket: RoomSocket,
+  requestedPuzzleId?: string,
 ): JoinResult {
-  const room = getOrCreateRoom(roomId);
+  const room = getOrCreateRoom(roomId, requestedPuzzleId);
+  if (!room) return { kind: 'invalidPuzzle' };
   const existing = room.players.get(playerId);
   if (existing) {
     existing.name = name;
@@ -113,6 +115,7 @@ export function buildStateMessage(room: Room): ServerMessage {
   }
   return {
     type: 'state',
+    puzzleId: room.puzzleId,
     players,
     cells,
     solvedWords: Array.from(room.solvedWords),
