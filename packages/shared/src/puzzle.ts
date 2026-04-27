@@ -78,6 +78,17 @@ export type PuzzleForClient = PuzzleBase & {
   };
 };
 
+/**
+ * Catalog metadata for the landing-page picker. Never includes `answer`.
+ */
+export type PuzzleSummary = {
+  id: string;
+  title: string;
+  theme: string;
+  rows: number;
+  cols: number;
+};
+
 export function stripAnswers(puzzle: PuzzleWithAnswers): PuzzleForClient {
   const strip = ({ answer: _answer, ...rest }: PuzzleClueWithAnswer): PuzzleClue => rest;
   return {

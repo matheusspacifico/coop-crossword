@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import type { PuzzleWithAnswers } from '@crossword/shared';
+import type { PuzzleSummary, PuzzleWithAnswers } from '@crossword/shared';
 
 const puzzlesDir = join(dirname(fileURLToPath(import.meta.url)), '../puzzles');
 
@@ -18,4 +18,14 @@ for (const entry of readdirSync(puzzlesDir)) {
 
 export function getPuzzle(id: string): PuzzleWithAnswers | null {
   return puzzles.get(id) ?? null;
+}
+
+export function listPuzzles(): PuzzleSummary[] {
+  return Array.from(puzzles.values(), ({ id, title, theme, rows, cols }) => ({
+    id,
+    title,
+    theme,
+    rows,
+    cols,
+  }));
 }

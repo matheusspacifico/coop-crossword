@@ -8,7 +8,7 @@ import type {
   ServerMessage,
 } from '@crossword/shared';
 import { SLUG_RE, stripAnswers } from '@crossword/shared';
-import { getPuzzle } from './puzzles.js';
+import { getPuzzle, listPuzzles } from './puzzles.js';
 import type { Room } from './rooms.js';
 import {
   broadcast,
@@ -22,6 +22,8 @@ const app = Fastify({ logger: true });
 await app.register(websocket);
 
 app.get('/health', async () => ({ status: 'ok' }));
+
+app.get('/puzzles', async () => listPuzzles());
 
 app.get<{ Params: { id: string } }>('/puzzles/:id', async (req, reply) => {
   const full = getPuzzle(req.params.id);
