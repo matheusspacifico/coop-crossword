@@ -1,11 +1,18 @@
-import type { ClientMessage, Player, PlayerId, RoomId, ServerMessage } from '@crossword/shared';
+import type {
+  ClientMessage,
+  Player,
+  PlayerId,
+  PuzzleForClient,
+  RoomId,
+  ServerMessage,
+} from '@crossword/shared';
 import { getPlayerId, getPlayerName } from './player';
 
 export type RoomStatus = 'connecting' | 'connected' | 'reconnecting' | 'disconnected' | 'error';
 
 const MAX_ATTEMPTS = 3;
 
-export function createRoom(roomId: RoomId) {
+export function createRoom(roomId: RoomId, desiredPuzzleId?: string) {
   const state = $state<{
     players: Player[];
     status: RoomStatus;
@@ -15,6 +22,7 @@ export function createRoom(roomId: RoomId) {
     solvedWords: string[];
     cursors: Record<PlayerId, { row: number; col: number }>;
     messages: Array<{ id: string; from: PlayerId; text: string; timestamp: number }>;
+    puzzle: PuzzleForClient | null;
   }>({
     players: [],
     status: 'connecting',
@@ -24,6 +32,7 @@ export function createRoom(roomId: RoomId) {
     solvedWords: [],
     cursors: {},
     messages: [],
+    puzzle: null,
   });
 
   let socket: WebSocket | null = null;
@@ -65,6 +74,9 @@ export function createRoom(roomId: RoomId) {
         for (const c of msg.cursors) next[c.playerId] = { row: c.row, col: c.col };
         state.cursors = next;
         state.messages = [];
+        if (state.puzzle?.id !== msg.puzzleId) {
+          void loadPuzzle(msg.puzzleId);
+        }
         return;
       }
       case 'playerJoined':
@@ -138,6 +150,21 @@ export function createRoom(roomId: RoomId) {
     socket.send(JSON.stringify(msg));
   }
 
+  async function loadPuzzle(puzzleId: string): Promise<void> {
+    try {
+      const res = await fetch(`/api/puzzles/${encodeURIComponent(puzzleId)}`);
+      if (!res.ok) {
+        state.error = 'Falha ao carregar enigma';
+        state.status = 'error';
+        return;
+      }
+      state.puzzle = (await res.json()) as PuzzleForClient;
+    } catch {
+      state.error = 'Falha ao carregar enigma';
+      state.status = 'error';
+    }
+  }
+
   function connect() {
     if (typeof window === 'undefined') return;
     if (destroyed) return;
@@ -160,6 +187,7 @@ export function createRoom(roomId: RoomId) {
         roomId,
         playerId: getPlayerId(),
         name: getPlayerName() ?? '',
+        puzzleId: desiredPuzzleId,
       };
       ws.send(JSON.stringify(join));
     });
@@ -211,6 +239,9 @@ export function createRoom(roomId: RoomId) {
     },
     get messages() {
       return state.messages;
+    },
+    get puzzle() {
+      return state.puzzle;
     },
     sendFill,
     sendSelect,

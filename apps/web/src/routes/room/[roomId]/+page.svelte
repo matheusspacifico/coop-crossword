@@ -9,14 +9,15 @@
   import type { PageData } from './$types';
 
   let { data }: { data: PageData } = $props();
-  const puzzle = $derived(data.puzzle);
 
   let playerName = $state('');
   let copyStatus = $state<'idle' | 'copied' | 'failed'>('idle');
   let room = $state<RoomState | null>(null);
 
+  const puzzle = $derived(room?.puzzle ?? null);
+
   const ui = $derived(
-    room
+    room && puzzle
       ? createPuzzleUI({
           puzzle,
           getFills: () => room!.fills,
@@ -51,7 +52,7 @@
   });
 
   $effect(() => {
-    const r = createRoom(data.roomId);
+    const r = createRoom(data.roomId, data.desiredPuzzleId);
     room = r;
     return () => {
       r.destroy();
@@ -149,12 +150,14 @@
       </span>
     </div>
 
-    <div>
-      <h1 class="text-3xl font-bold">{puzzle.title}</h1>
-      <p class="text-sm text-neutral-500">Tema: {puzzle.theme}</p>
-    </div>
+    {#if puzzle}
+      <div>
+        <h1 class="text-3xl font-bold">{puzzle.title}</h1>
+        <p class="text-sm text-neutral-500">Tema: {puzzle.theme}</p>
+      </div>
+    {/if}
   </header>
-  {#if ui && room}
+  {#if ui && room && puzzle}
     <div class="flex flex-col gap-4 lg:flex-row lg:items-start">
       <div class="min-w-0 flex-1">
         <Grid {puzzle} {ui} />
