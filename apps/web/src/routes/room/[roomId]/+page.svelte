@@ -1,6 +1,7 @@
 <script lang="ts">
   import Grid from '$lib/components/Grid.svelte';
   import Chat from '$lib/components/Chat.svelte';
+  import CompletionOverlay from '$lib/components/CompletionOverlay.svelte';
   import { createPuzzleUI } from '$lib/state/puzzle-ui.svelte';
   import { createRoom, type RoomState } from '$lib/state/room.svelte';
   import { getPlayerId, getPlayerName } from '$lib/state/player';
@@ -13,8 +14,10 @@
   let playerName = $state('');
   let copyStatus = $state<'idle' | 'copied' | 'failed'>('idle');
   let room = $state<RoomState | null>(null);
+  let dismissed = $state(false);
 
   const puzzle = $derived(room?.puzzle ?? null);
+  const showOverlay = $derived(Boolean(room?.isComplete) && !dismissed);
 
   const ui = $derived(
     room && puzzle
@@ -67,12 +70,16 @@
   });
 
   $effect(() => {
-    if (!ui) return;
+    if (!ui || showOverlay) return;
     const currentUi = ui;
     const handler = (e: KeyboardEvent) => currentUi.handleKeydown(e);
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   });
+
+  function leaveRoom() {
+    goto(resolve('/'));
+  }
 
   $effect(() => {
     if (copyStatus === 'idle') return;
@@ -108,7 +115,7 @@
   };
 </script>
 
-<main class="mx-auto flex max-w-5xl flex-col gap-4 p-8">
+<main class="mx-auto flex max-w-5xl flex-col gap-4 p-8" inert={showOverlay}>
   <header class="flex flex-col gap-3">
     <div class="flex items-center justify-between text-sm text-neutral-600">
       <span>{playerName} · Sala {data.roomId}</span>
@@ -166,3 +173,12 @@
     </div>
   {/if}
 </main>
+
+{#if room && showOverlay}
+  <CompletionOverlay
+    players={room.players}
+    joinedAt={room.joinedAt}
+    onDismiss={() => (dismissed = true)}
+    onLeave={leaveRoom}
+  />
+{/if}

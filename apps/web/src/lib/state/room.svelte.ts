@@ -23,6 +23,7 @@ export function createRoom(roomId: RoomId, desiredPuzzleId?: string) {
     cursors: Record<PlayerId, { row: number; col: number }>;
     messages: Array<{ id: string; from: PlayerId; text: string; timestamp: number }>;
     puzzle: PuzzleForClient | null;
+    joinedAt: number | null;
   }>({
     players: [],
     status: 'connecting',
@@ -33,7 +34,13 @@ export function createRoom(roomId: RoomId, desiredPuzzleId?: string) {
     cursors: {},
     messages: [],
     puzzle: null,
+    joinedAt: null,
   });
+
+  const isComplete = $derived(
+    state.puzzle !== null &&
+      state.solvedWords.length >= state.puzzle.clues.across.length + state.puzzle.clues.down.length,
+  );
 
   let socket: WebSocket | null = null;
   let attempts = 0;
@@ -74,6 +81,9 @@ export function createRoom(roomId: RoomId, desiredPuzzleId?: string) {
         for (const c of msg.cursors) next[c.playerId] = { row: c.row, col: c.col };
         state.cursors = next;
         state.messages = [];
+        if (state.joinedAt === null) {
+          state.joinedAt = Date.now();
+        }
         if (state.puzzle?.id !== msg.puzzleId) {
           void loadPuzzle(msg.puzzleId);
         }
@@ -242,6 +252,12 @@ export function createRoom(roomId: RoomId, desiredPuzzleId?: string) {
     },
     get puzzle() {
       return state.puzzle;
+    },
+    get joinedAt() {
+      return state.joinedAt;
+    },
+    get isComplete() {
+      return isComplete;
     },
     sendFill,
     sendSelect,
