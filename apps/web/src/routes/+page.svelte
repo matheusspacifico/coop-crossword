@@ -4,10 +4,14 @@
   import { page } from '$app/state';
   import { getPlayerName, setPlayerName } from '$lib/state/player';
   import { generateRoomSlug, SLUG_RE } from '$lib/slug';
+  import type { PageData } from './$types';
+
+  let { data }: { data: PageData } = $props();
 
   let name = $state('');
   let code = $state('');
   let mode = $state<'create' | 'join'>('create');
+  let puzzleId = $state('');
 
   $effect(() => {
     const stored = getPlayerName();
@@ -17,10 +21,16 @@
       mode = 'join';
       code = queryCode;
     }
+    const queryPuzzle = page.url.searchParams.get('puzzle');
+    if (queryPuzzle && data.puzzles.some((p) => p.id === queryPuzzle)) {
+      puzzleId = queryPuzzle;
+    } else if (puzzleId === '' && data.puzzles.length > 0) {
+      puzzleId = data.puzzles[0].id;
+    }
   });
 
   const trimmed = $derived(name.trim());
-  const canCreate = $derived(trimmed.length > 0);
+  const canCreate = $derived(trimmed.length > 0 && puzzleId.length > 0);
   const canJoin = $derived(trimmed.length > 0 && SLUG_RE.test(code));
 
   function onCodeInput(e: Event) {
@@ -31,7 +41,8 @@
   function create() {
     if (!canCreate) return;
     setPlayerName(trimmed);
-    goto(resolve('/room/[roomId]', { roomId: generateRoomSlug() }));
+    const slug = generateRoomSlug();
+    goto(resolve(`/room/${slug}?puzzle=${encodeURIComponent(puzzleId)}`));
   }
 
   function showJoin() {
@@ -75,6 +86,19 @@
           spellcheck="false"
           class="rounded border border-neutral-300 px-3 py-2 font-mono tracking-widest uppercase"
         />
+      </label>
+    {:else}
+      <label class="flex flex-col gap-1 text-sm text-neutral-700">
+        Escolha um enigma
+        <select
+          bind:value={puzzleId}
+          class="rounded border border-neutral-300 px-3 py-2"
+          disabled={data.puzzles.length === 0}
+        >
+          {#each data.puzzles as p (p.id)}
+            <option value={p.id}>{p.title} — {p.theme}</option>
+          {/each}
+        </select>
       </label>
     {/if}
 
