@@ -84,9 +84,7 @@
         class="flex h-full flex-col items-center justify-center gap-2 px-6 text-center text-cocoa-mute"
       >
         <span class="font-accent text-2xl text-terracotta-deep">comecem a conversar</span>
-        <p class="text-[12px] leading-snug">
-          Mande uma dica, comemore uma resposta, mande memes — só vocês dois enxergam.
-        </p>
+        <p class="text-[12px] leading-snug">Converse com seu parceiro via mensagem.</p>
       </div>
     {/each}
   </div>
