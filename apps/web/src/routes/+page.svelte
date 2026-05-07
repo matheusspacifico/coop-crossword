@@ -13,6 +13,9 @@
   let mode = $state<'create' | 'join'>('create');
   let puzzleId = $state('');
 
+  const samples = $derived(data.puzzles.filter((p) => p.id.startsWith('sample-')));
+  const nytPool = $derived(data.puzzles.filter((p) => p.id.startsWith('nyt-')));
+
   $effect(() => {
     const stored = getPlayerName();
     if (stored) name = stored;
@@ -24,13 +27,14 @@
     const queryPuzzle = page.url.searchParams.get('puzzle');
     if (queryPuzzle && data.puzzles.some((p) => p.id === queryPuzzle)) {
       puzzleId = queryPuzzle;
-    } else if (puzzleId === '' && data.puzzles.length > 0) {
-      puzzleId = data.puzzles[0].id;
+    } else if (puzzleId === '' && samples.length > 0) {
+      puzzleId = samples[0].id;
     }
   });
 
   const trimmed = $derived(name.trim());
   const canCreate = $derived(trimmed.length > 0 && puzzleId.length > 0);
+  const canRandom = $derived(trimmed.length > 0 && nytPool.length > 0);
   const canJoin = $derived(trimmed.length > 0 && SLUG_RE.test(code));
 
   function onCodeInput(e: Event) {
@@ -43,6 +47,14 @@
     setPlayerName(trimmed);
     const slug = generateRoomSlug();
     goto(resolve(`/room/${slug}?puzzle=${encodeURIComponent(puzzleId)}`));
+  }
+
+  function createRandom() {
+    if (!canRandom) return;
+    const pick = nytPool[Math.floor(Math.random() * nytPool.length)];
+    setPlayerName(trimmed);
+    const slug = generateRoomSlug();
+    goto(resolve(`/room/${slug}?puzzle=${encodeURIComponent(pick.id)}`));
   }
 
   function showJoin() {
@@ -93,16 +105,16 @@
         <select
           bind:value={puzzleId}
           class="rounded border border-neutral-300 px-3 py-2"
-          disabled={data.puzzles.length === 0}
+          disabled={samples.length === 0}
         >
-          {#each data.puzzles as p (p.id)}
+          {#each samples as p (p.id)}
             <option value={p.id}>{p.title} — {p.theme}</option>
           {/each}
         </select>
       </label>
     {/if}
 
-    <div class="flex gap-2">
+    <div class="flex flex-wrap gap-2">
       {#if mode === 'create'}
         <button
           type="button"
@@ -111,6 +123,15 @@
           class="rounded bg-neutral-900 px-4 py-2 text-white disabled:opacity-40"
         >
           Criar sala
+        </button>
+        <button
+          type="button"
+          onclick={createRandom}
+          disabled={!canRandom}
+          title="Criar sala com um enigma NYT aleatório"
+          class="rounded border border-neutral-300 px-4 py-2 disabled:opacity-40"
+        >
+          Sortear enigma
         </button>
         <button
           type="button"
