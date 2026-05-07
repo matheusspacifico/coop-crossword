@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "import-nyt": "tsx scripts/import-nyt.ts"
   },
   "dependencies": {
     "@crossword/shared": "workspace:*",
