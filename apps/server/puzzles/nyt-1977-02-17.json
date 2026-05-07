@@ -1,0 +1,1516 @@
+{
+  "id": "nyt-1977-02-17",
+  "title": "NY TIMES, THU, FEB 17, 1977",
+  "theme": "Thursday",
+  "language": "en",
+  "rows": 15,
+  "cols": 15,
+  "grid": [
+    [
+      {
+        "kind": "cell",
+        "number": 1
+      },
+      {
+        "kind": "cell",
+        "number": 2
+      },
+      {
+        "kind": "cell",
+        "number": 3
+      },
+      {
+        "kind": "cell",
+        "number": 4
+      },
+      {
+        "kind": "cell",
+        "number": 5
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 6
+      },
+      {
+        "kind": "cell",
+        "number": 7
+      },
+      {
+        "kind": "cell",
+        "number": 8
+      },
+      {
+        "kind": "cell",
+        "number": 9
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 10
+      },
+      {
+        "kind": "cell",
+        "number": 11
+      },
+      {
+        "kind": "cell",
+        "number": 12
+      },
+      {
+        "kind": "cell",
+        "number": 13
+      }
+    ],
+    [
+      {
+        "kind": "cell",
+        "number": 14
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 15
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 16
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      }
+    ],
+    [
+      {
+        "kind": "cell",
+        "number": 17
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 18
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": 19
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      }
+    ],
+    [
+      {
+        "kind": "cell",
+        "number": 20
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": 21
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 22
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      }
+    ],
+    [
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 23
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 24
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      }
+    ],
+    [
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 25
+      },
+      {
+        "kind": "cell",
+        "number": 26
+      },
+      {
+        "kind": "cell",
+        "number": 27
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 28
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      }
+    ],
+    [
+      {
+        "kind": "cell",
+        "number": 29
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 30
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": 31
+      },
+      {
+        "kind": "cell",
+        "number": 32
+      },
+      {
+        "kind": "cell",
+        "number": 33
+      },
+      {
+        "kind": "cell",
+        "number": 34
+      }
+    ],
+    [
+      {
+        "kind": "cell",
+        "number": 35
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 36
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 37
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      }
+    ],
+    [
+      {
+        "kind": "cell",
+        "number": 38
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": 39
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 40
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      }
+    ],
+    [
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 41
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 42
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      }
+    ],
+    [
+      {
+        "kind": "cell",
+        "number": 43
+      },
+      {
+        "kind": "cell",
+        "number": 44
+      },
+      {
+        "kind": "cell",
+        "number": 45
+      },
+      {
+        "kind": "cell",
+        "number": 46
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 47
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "block"
+      }
+    ],
+    [
+      {
+        "kind": "cell",
+        "number": 48
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 49
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": 50
+      },
+      {
+        "kind": "cell",
+        "number": 51
+      },
+      {
+        "kind": "cell",
+        "number": 52
+      },
+      {
+        "kind": "cell",
+        "number": 53
+      }
+    ],
+    [
+      {
+        "kind": "cell",
+        "number": 54
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": 55
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 56
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      }
+    ],
+    [
+      {
+        "kind": "cell",
+        "number": 57
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 58
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 59
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      }
+    ],
+    [
+      {
+        "kind": "cell",
+        "number": 60
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 61
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "block"
+      },
+      {
+        "kind": "cell",
+        "number": 62
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      },
+      {
+        "kind": "cell",
+        "number": null
+      }
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "length": 5,
+        "text": "Well-groomed",
+        "answer": "SLEEK"
+      },
+      {
+        "number": 6,
+        "row": 0,
+        "col": 6,
+        "length": 4,
+        "text": "Failures",
+        "answer": "DUDS"
+      },
+      {
+        "number": 10,
+        "row": 0,
+        "col": 11,
+        "length": 4,
+        "text": "___ en scène",
+        "answer": "MISE"
+      },
+      {
+        "number": 14,
+        "row": 1,
+        "col": 0,
+        "length": 5,
+        "text": "Opera-box wear",
+        "answer": "TIARA"
+      },
+      {
+        "number": 15,
+        "row": 1,
+        "col": 6,
+        "length": 4,
+        "text": "Govt. agency",
+        "answer": "USIA"
+      },
+      {
+        "number": 16,
+        "row": 1,
+        "col": 11,
+        "length": 4,
+        "text": "This, in Spain",
+        "answer": "ESTA"
+      },
+      {
+        "number": 17,
+        "row": 2,
+        "col": 0,
+        "length": 5,
+        "text": "Anchor position",
+        "answer": "ATRIP"
+      },
+      {
+        "number": 18,
+        "row": 2,
+        "col": 6,
+        "length": 9,
+        "text": "Eve or present",
+        "answer": "CHRISTMAS"
+      },
+      {
+        "number": 20,
+        "row": 3,
+        "col": 0,
+        "length": 9,
+        "text": "Implores",
+        "answer": "BESEECHES"
+      },
+      {
+        "number": 22,
+        "row": 3,
+        "col": 10,
+        "length": 5,
+        "text": "Hot under the collar",
+        "answer": "IRATE"
+      },
+      {
+        "number": 23,
+        "row": 4,
+        "col": 4,
+        "length": 4,
+        "text": "Large dormouse",
+        "answer": "LOIR"
+      },
+      {
+        "number": 24,
+        "row": 4,
+        "col": 9,
+        "length": 6,
+        "text": "Leon Uris book",
+        "answer": "EXODUS"
+      },
+      {
+        "number": 25,
+        "row": 5,
+        "col": 1,
+        "length": 6,
+        "text": "Henny Youngman's prop",
+        "answer": "VIOLIN"
+      },
+      {
+        "number": 28,
+        "row": 5,
+        "col": 8,
+        "length": 3,
+        "text": "Doer: Suffix",
+        "answer": "IST"
+      },
+      {
+        "number": 29,
+        "row": 6,
+        "col": 0,
+        "length": 6,
+        "text": "Op-ed page feature",
+        "answer": "COLUMN"
+      },
+      {
+        "number": 30,
+        "row": 6,
+        "col": 7,
+        "length": 8,
+        "text": "Fine wool",
+        "answer": "CASHMERE"
+      },
+      {
+        "number": 35,
+        "row": 7,
+        "col": 0,
+        "length": 5,
+        "text": "Kind of indigestion",
+        "answer": "ACUTE"
+      },
+      {
+        "number": 36,
+        "row": 7,
+        "col": 6,
+        "length": 3,
+        "text": "Family member",
+        "answer": "SON"
+      },
+      {
+        "number": 37,
+        "row": 7,
+        "col": 10,
+        "length": 5,
+        "text": "Fern cluster",
+        "answer": "SORUS"
+      },
+      {
+        "number": 38,
+        "row": 8,
+        "col": 0,
+        "length": 8,
+        "text": "Jam and bull",
+        "answer": "SESSIONS"
+      },
+      {
+        "number": 40,
+        "row": 8,
+        "col": 9,
+        "length": 6,
+        "text": "Overbearing one",
+        "answer": "TYRANT"
+      },
+      {
+        "number": 41,
+        "row": 9,
+        "col": 4,
+        "length": 3,
+        "text": "Lark or scraper",
+        "answer": "SKY"
+      },
+      {
+        "number": 42,
+        "row": 9,
+        "col": 8,
+        "length": 6,
+        "text": "Beasts of burden",
+        "answer": "CAMELS"
+      },
+      {
+        "number": 43,
+        "row": 10,
+        "col": 0,
+        "length": 6,
+        "text": "Taste",
+        "answer": "PALATE"
+      },
+      {
+        "number": 47,
+        "row": 10,
+        "col": 7,
+        "length": 4,
+        "text": "Counterpart of nuts",
+        "answer": "SOUP"
+      },
+      {
+        "number": 48,
+        "row": 11,
+        "col": 0,
+        "length": 5,
+        "text": "Type size",
+        "answer": "AGATE"
+      },
+      {
+        "number": 49,
+        "row": 11,
+        "col": 6,
+        "length": 9,
+        "text": "Crake or sora, e.g.",
+        "answer": "MARSHBIRD"
+      },
+      {
+        "number": 54,
+        "row": 12,
+        "col": 0,
+        "length": 9,
+        "text": "Stage prop",
+        "answer": "PAPERMOON"
+      },
+      {
+        "number": 56,
+        "row": 12,
+        "col": 10,
+        "length": 5,
+        "text": "\"It's do ___\"",
+        "answer": "ORDIE"
+      },
+      {
+        "number": 57,
+        "row": 13,
+        "col": 0,
+        "length": 4,
+        "text": "Tel ___",
+        "answer": "AVIV"
+      },
+      {
+        "number": 58,
+        "row": 13,
+        "col": 5,
+        "length": 4,
+        "text": "Bulwer-Lytton girl",
+        "answer": "IONE"
+      },
+      {
+        "number": 59,
+        "row": 13,
+        "col": 10,
+        "length": 5,
+        "text": "Relative",
+        "answer": "NIECE"
+      },
+      {
+        "number": 60,
+        "row": 14,
+        "col": 0,
+        "length": 4,
+        "text": "___-majesty",
+        "answer": "LESE"
+      },
+      {
+        "number": 61,
+        "row": 14,
+        "col": 5,
+        "length": 4,
+        "text": "European river",
+        "answer": "ODER"
+      },
+      {
+        "number": 62,
+        "row": 14,
+        "col": 10,
+        "length": 5,
+        "text": "Certain votes",
+        "answer": "YESES"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "length": 4,
+        "text": "Brief effort",
+        "answer": "STAB"
+      },
+      {
+        "number": 2,
+        "row": 0,
+        "col": 1,
+        "length": 4,
+        "text": "Rock: Suffix",
+        "answer": "LITE"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 2,
+        "length": 4,
+        "text": "\"I'm all ___\"",
+        "answer": "EARS"
+      },
+      {
+        "number": 4,
+        "row": 0,
+        "col": 3,
+        "length": 4,
+        "text": "Penna. port",
+        "answer": "ERIE"
+      },
+      {
+        "number": 5,
+        "row": 0,
+        "col": 4,
+        "length": 13,
+        "text": "Choir director",
+        "answer": "KAPELLMEISTER"
+      },
+      {
+        "number": 6,
+        "row": 0,
+        "col": 6,
+        "length": 6,
+        "text": "Musician Peter",
+        "answer": "DUCHIN"
+      },
+      {
+        "number": 7,
+        "row": 0,
+        "col": 7,
+        "length": 5,
+        "text": "Wedding helper",
+        "answer": "USHER"
+      },
+      {
+        "number": 8,
+        "row": 0,
+        "col": 8,
+        "length": 4,
+        "text": "Board members: Abbr.",
+        "answer": "DIRS"
+      },
+      {
+        "number": 9,
+        "row": 0,
+        "col": 9,
+        "length": 3,
+        "text": "Monkey",
+        "answer": "SAI"
+      },
+      {
+        "number": 10,
+        "row": 0,
+        "col": 11,
+        "length": 5,
+        "text": "Paris transit",
+        "answer": "METRO"
+      },
+      {
+        "number": 11,
+        "row": 0,
+        "col": 12,
+        "length": 5,
+        "text": "\"That he ___, 'tis true\"",
+        "answer": "ISMAD"
+      },
+      {
+        "number": 12,
+        "row": 0,
+        "col": 13,
+        "length": 5,
+        "text": "In ___ quo",
+        "answer": "STATU"
+      },
+      {
+        "number": 13,
+        "row": 0,
+        "col": 14,
+        "length": 5,
+        "text": "Loosens",
+        "answer": "EASES"
+      },
+      {
+        "number": 19,
+        "row": 2,
+        "col": 10,
+        "length": 13,
+        "text": "Beethoven's Pastoral",
+        "answer": "SIXTHSYMPHONY"
+      },
+      {
+        "number": 21,
+        "row": 3,
+        "col": 5,
+        "length": 4,
+        "text": "___ a phrase",
+        "answer": "COIN"
+      },
+      {
+        "number": 24,
+        "row": 4,
+        "col": 9,
+        "length": 3,
+        "text": "Curve",
+        "answer": "ESS"
+      },
+      {
+        "number": 25,
+        "row": 5,
+        "col": 1,
+        "length": 4,
+        "text": "Sotto ___",
+        "answer": "VOCE"
+      },
+      {
+        "number": 26,
+        "row": 5,
+        "col": 2,
+        "length": 4,
+        "text": "Son of Tros",
+        "answer": "ILUS"
+      },
+      {
+        "number": 27,
+        "row": 5,
+        "col": 3,
+        "length": 4,
+        "text": "Inning trio",
+        "answer": "OUTS"
+      },
+      {
+        "number": 28,
+        "row": 5,
+        "col": 8,
+        "length": 3,
+        "text": "Fleming",
+        "answer": "IAN"
+      },
+      {
+        "number": 29,
+        "row": 6,
+        "col": 0,
+        "length": 3,
+        "text": "Instance, in France",
+        "answer": "CAS"
+      },
+      {
+        "number": 30,
+        "row": 6,
+        "col": 7,
+        "length": 3,
+        "text": "Lettuce",
+        "answer": "COS"
+      },
+      {
+        "number": 31,
+        "row": 6,
+        "col": 11,
+        "length": 4,
+        "text": "Relative of \"To be continued\"",
+        "answer": "MORE"
+      },
+      {
+        "number": 32,
+        "row": 6,
+        "col": 12,
+        "length": 4,
+        "text": "Of a time period",
+        "answer": "ERAL"
+      },
+      {
+        "number": 33,
+        "row": 6,
+        "col": 13,
+        "length": 4,
+        "text": "Home and end",
+        "answer": "RUNS"
+      },
+      {
+        "number": 34,
+        "row": 6,
+        "col": 14,
+        "length": 3,
+        "text": "Superlative suffix",
+        "answer": "EST"
+      },
+      {
+        "number": 36,
+        "row": 7,
+        "col": 6,
+        "length": 3,
+        "text": "Ship-plank's curve",
+        "answer": "SNY"
+      },
+      {
+        "number": 39,
+        "row": 8,
+        "col": 5,
+        "length": 3,
+        "text": "Greek weight",
+        "answer": "OKE"
+      },
+      {
+        "number": 40,
+        "row": 8,
+        "col": 9,
+        "length": 4,
+        "text": "Greek letters",
+        "answer": "TAUS"
+      },
+      {
+        "number": 42,
+        "row": 9,
+        "col": 8,
+        "length": 6,
+        "text": "Place for a naughty pupil",
+        "answer": "CORNER"
+      },
+      {
+        "number": 43,
+        "row": 10,
+        "col": 0,
+        "length": 5,
+        "text": "___ States",
+        "answer": "PAPAL"
+      },
+      {
+        "number": 44,
+        "row": 10,
+        "col": 1,
+        "length": 5,
+        "text": "Century plant",
+        "answer": "AGAVE"
+      },
+      {
+        "number": 45,
+        "row": 10,
+        "col": 2,
+        "length": 5,
+        "text": "___ lazuli",
+        "answer": "LAPIS"
+      },
+      {
+        "number": 46,
+        "row": 10,
+        "col": 3,
+        "length": 5,
+        "text": "\"The stag ___ . . . \"",
+        "answer": "ATEVE"
+      },
+      {
+        "number": 47,
+        "row": 10,
+        "col": 7,
+        "length": 5,
+        "text": "River to the Rhone",
+        "answer": "SAONE"
+      },
+      {
+        "number": 49,
+        "row": 11,
+        "col": 6,
+        "length": 4,
+        "text": "Disposition",
+        "answer": "MOOD"
+      },
+      {
+        "number": 50,
+        "row": 11,
+        "col": 11,
+        "length": 4,
+        "text": "Soft cheese",
+        "answer": "BRIE"
+      },
+      {
+        "number": 51,
+        "row": 11,
+        "col": 12,
+        "length": 4,
+        "text": "Caesar's time",
+        "answer": "IDES"
+      },
+      {
+        "number": 52,
+        "row": 11,
+        "col": 13,
+        "length": 4,
+        "text": "Kind of pudding",
+        "answer": "RICE"
+      },
+      {
+        "number": 53,
+        "row": 11,
+        "col": 14,
+        "length": 4,
+        "text": "Ruby and Sandra",
+        "answer": "DEES"
+      },
+      {
+        "number": 55,
+        "row": 12,
+        "col": 5,
+        "length": 3,
+        "text": "My, in Naples",
+        "answer": "MIO"
+      }
+    ]
+  }
+}
