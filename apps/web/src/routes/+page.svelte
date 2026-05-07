@@ -153,23 +153,23 @@
           <span class="font-accent text-base text-terracotta-deep">novo</span>
         </header>
 
-        <label class="block">
-          <span class="font-mono text-[10px] tracking-[0.18em] text-cocoa-mute uppercase">
-            Enigma
-          </span>
-          <select
-            bind:value={puzzleId}
-            disabled={samples.length === 0}
-            class="mt-1.5 w-full appearance-none rounded-md border border-cocoa-line bg-linen-soft/60 px-3 py-2 pr-9 text-sm text-cocoa shadow-inner focus:border-terracotta focus:outline-none disabled:opacity-50"
-            style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238C7268' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>&quot;); background-repeat: no-repeat; background-position: right 0.6rem center; background-size: 14px;"
-          >
-            {#each samples as p (p.id)}
-              <option value={p.id}>{p.title} — {p.theme}</option>
-            {/each}
-          </select>
-        </label>
-
         <div class="flex flex-col gap-2">
+          <label class="block">
+            <span class="font-mono text-[10px] tracking-[0.18em] text-cocoa-mute uppercase">
+              Enigma · português
+            </span>
+            <span class="block text-[11px] text-cocoa-mute/80"> feitos à mão, em pt-BR </span>
+            <select
+              bind:value={puzzleId}
+              disabled={samples.length === 0}
+              class="mt-1.5 w-full appearance-none rounded-md border border-cocoa-line bg-linen-soft/60 px-3 py-2 pr-9 text-sm text-cocoa shadow-inner focus:border-terracotta focus:outline-none disabled:opacity-50"
+              style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238C7268' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>&quot;); background-repeat: no-repeat; background-position: right 0.6rem center; background-size: 14px;"
+            >
+              {#each samples as p (p.id)}
+                <option value={p.id}>{p.title} — {p.theme}</option>
+              {/each}
+            </select>
+          </label>
           <button
             type="button"
             onclick={create}
@@ -178,11 +178,22 @@
           >
             Criar sala
           </button>
+        </div>
+
+        <div
+          class="flex items-center gap-3 text-[10px] tracking-[0.18em] text-cocoa-mute uppercase"
+        >
+          <span class="h-px flex-1 bg-cocoa-line/70" aria-hidden="true"></span>
+          <span class="font-mono">ou um sorteio</span>
+          <span class="h-px flex-1 bg-cocoa-line/70" aria-hidden="true"></span>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
           <button
             type="button"
             onclick={createRandom}
             disabled={!canRandom}
-            title="Criar sala com um enigma NYT aleatório"
+            title="Criar sala com um enigma do NY Times (em inglês)"
             class="group/r flex items-center justify-center gap-2 rounded-md border border-terracotta/40 bg-terracotta-wash/40 px-4 py-2 text-sm font-semibold text-terracotta-deep transition hover:border-terracotta hover:bg-terracotta-wash focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 focus-visible:ring-offset-paper disabled:cursor-not-allowed disabled:opacity-50"
           >
             <svg
@@ -201,8 +212,11 @@
               <rect width="18" height="18" x="3" y="3" rx="2" />
               <path d="M16 8h.01M8 8h.01M12 12h.01M16 16h.01M8 16h.01" />
             </svg>
-            Sortear enigma
+            Sortear enigma do NYT
           </button>
+          <p class="text-center text-[11px] leading-snug text-cocoa-mute">
+            em inglês &middot; acervo do NY Times
+          </p>
         </div>
       </article>
 
