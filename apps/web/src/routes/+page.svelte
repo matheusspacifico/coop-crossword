@@ -103,8 +103,7 @@
         um quebra-cabeça pra dois.
       </p>
       <p class="mt-4 max-w-md text-sm leading-relaxed text-cocoa-mute">
-        Compartilhem uma grade. Resolvam juntos, em tempo real. Sem login, sem perfil, sem rastro
-        &mdash; só vocês dois e as palavras.
+        Compartilhem uma grade. Resolvam juntos, em tempo real.
       </p>
     </section>
 
