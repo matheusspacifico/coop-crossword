@@ -84,9 +84,6 @@
       <Brand size={22} class="text-cocoa" />
       <span class="font-display text-[15px] font-semibold tracking-tight">Coop Crossword</span>
     </a>
-    <span class="hidden font-accent text-lg text-terracotta-deep sm:inline">
-      pt-BR · 2 jogadores
-    </span>
   </header>
 
   <main class="mx-auto flex w-full max-w-3xl flex-1 flex-col items-stretch px-5 pt-6 pb-16 sm:px-8">
