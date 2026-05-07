@@ -10,11 +10,21 @@
   let { puzzle, ui }: Props = $props();
 
   function cellClass(r: number, c: number): string {
-    const selection = ui.selection;
-    if (selection.row === r && selection.col === c) return 'bg-yellow-300';
-    if (ui.activeWordKeys[`${r},${c}`]) return 'bg-yellow-100';
-    if (ui.solvedCellKeys[`${r},${c}`]) return 'bg-emerald-50';
-    return 'bg-white';
+    const key = `${r},${c}`;
+    const sel = ui.selection;
+    if (sel.row === r && sel.col === c) {
+      return 'bg-terracotta text-paper';
+    }
+    if (ui.previewWordKeys[key]) {
+      return 'bg-terracotta-wash text-cocoa';
+    }
+    if (ui.activeWordKeys[key]) {
+      return 'bg-terracotta-soft text-cocoa';
+    }
+    if (ui.solvedCellKeys[key]) {
+      return 'bg-sage-soft text-cocoa';
+    }
+    return 'bg-paper text-cocoa';
   }
 
   function remoteCursorColor(r: number, c: number): string | null {
@@ -25,63 +35,50 @@
   }
 </script>
 
-<div class="flex flex-wrap items-start gap-8">
-  <div
-    class="grid w-full max-w-[560px] border border-neutral-900 bg-neutral-900 select-none"
-    style="grid-template-columns: repeat({puzzle.cols}, minmax(0, 1fr)); gap: 1px;"
-  >
-    {#each puzzle.grid as row, r (r)}
-      {#each row as cell, c (c)}
-        {#if cell.kind === 'block'}
-          <div class="aspect-square bg-neutral-900"></div>
-        {:else}
-          {@const remote = remoteCursorColor(r, c)}
-          {@const glyphColor = ui.letterColor(r, c)}
-          <button
-            type="button"
-            class="relative aspect-square cursor-pointer {cellClass(r, c)}"
-            style={remote ? `outline: 2px solid ${remote}; outline-offset: -2px;` : ''}
-            onclick={() => ui.selectCell(r, c)}
-          >
-            {#if cell.number !== null}
-              <span class="absolute top-0.5 left-1 text-[10px] leading-none text-neutral-600">
-                {cell.number}
+<div
+  class="relative grid h-full w-full overflow-hidden rounded-md border border-cocoa shadow-soft select-none"
+  style="grid-template-columns: repeat({puzzle.cols}, minmax(0, 1fr)); background-color: var(--color-cocoa); gap: 1px;"
+>
+  {#each puzzle.grid as row, r (r)}
+    {#each row as cell, c (c)}
+      {#if cell.kind === 'block'}
+        <div class="aspect-square bg-cocoa"></div>
+      {:else}
+        {@const remote = remoteCursorColor(r, c)}
+        {@const glyphColor = ui.letterColor(r, c)}
+        {@const fill = ui.fills[r]?.[c] ?? ''}
+        {@const sel = ui.selection.row === r && ui.selection.col === c}
+        <button
+          type="button"
+          aria-label={`Cell row ${r + 1} column ${c + 1}`}
+          class="group relative aspect-square cursor-pointer overflow-hidden transition-colors duration-150 ease-[var(--ease-soft)] focus:outline-none {cellClass(
+            r,
+            c,
+          )}"
+          style={remote ? `box-shadow: inset 0 0 0 2px ${remote};` : ''}
+          onclick={() => ui.selectCell(r, c)}
+        >
+          {#if cell.number !== null}
+            <span
+              class="pointer-events-none absolute top-[2px] left-[3px] font-mono text-[10px] leading-none {sel
+                ? 'text-paper/85'
+                : 'text-cocoa-mute'}"
+            >
+              {cell.number}
+            </span>
+          {/if}
+          {#key fill}
+            {#if fill !== ''}
+              <span
+                class="pointer-events-none absolute inset-0 flex cell-pop items-end justify-center pb-[6%] font-sans text-[clamp(1.05rem,2.4vw,1.5rem)] font-bold tracking-tight"
+                style={glyphColor && !sel ? `color: ${glyphColor};` : ''}
+              >
+                {fill}
               </span>
             {/if}
-            <span
-              class="absolute inset-0 flex items-center justify-center text-lg font-semibold text-neutral-900"
-              style={glyphColor ? `color: ${glyphColor};` : ''}
-            >
-              {ui.fills[r]?.[c] ?? ''}
-            </span>
-          </button>
-        {/if}
-      {/each}
+          {/key}
+        </button>
+      {/if}
     {/each}
-  </div>
-
-  <div class="flex min-w-[220px] flex-col gap-6 text-sm">
-    <section>
-      <h2 class="mb-2 font-semibold tracking-wide text-neutral-700 uppercase">Horizontais</h2>
-      <ol class="space-y-1">
-        {#each puzzle.clues.across as clue (clue.number)}
-          <li>
-            <span class="font-semibold">{clue.number}.</span>
-            {clue.text}
-          </li>
-        {/each}
-      </ol>
-    </section>
-    <section>
-      <h2 class="mb-2 font-semibold tracking-wide text-neutral-700 uppercase">Verticais</h2>
-      <ol class="space-y-1">
-        {#each puzzle.clues.down as clue (clue.number)}
-          <li>
-            <span class="font-semibold">{clue.number}.</span>
-            {clue.text}
-          </li>
-        {/each}
-      </ol>
-    </section>
-  </div>
+  {/each}
 </div>
